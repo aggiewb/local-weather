@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  componentDidMount(){
+    window.addEventListener('load', () => this.handleLoad());
+  }
+
+  handleLoad(){
+    navigator.geolocation.getCurrentPosition(position => this.success(position))
+  }
+
+  //TODO: fetch api in ./server which fetches the freeCodeCamp api
+  success(position){
+    const coordinates = position.coords;
+    const longitude = coordinates.longitude;
+    const latitude = coordinates.latitude;
+  }
+
+  render(){
+    return <Hello />
+  }
+}
+
+const Hello = () => {
+return <div>
+  <h1>Hello World</h1>
+</div>;
 }
 
 export default App;
