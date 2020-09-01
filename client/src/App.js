@@ -7,7 +7,7 @@ class App extends React.Component {
   }
 
   handleLoad(){
-    navigator.geolocation.getCurrentPosition(position => this.success(position))
+    navigator.geolocation.getCurrentPosition(position => this.success(position));
   }
 
   //TODO: fetch api in ./server which fetches the freeCodeCamp api
@@ -15,10 +15,13 @@ class App extends React.Component {
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
     const latitude = coordinates.latitude;
+    fetch(`/${longitude}/${latitude}`, {
+      method: 'GET',
+    })
   }
 
   render(){
-    return <Hello />
+    return <Hello />;
   }
 }
 
