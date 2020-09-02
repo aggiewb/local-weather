@@ -2,6 +2,13 @@ import React from 'react';
 import './App.css';
 
 class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      tempCelsius: 0
+    }
+  }
+
   componentDidMount(){
     window.addEventListener('load', () => this.handleLoad());
   }
@@ -21,17 +28,18 @@ class App extends React.Component {
     .then(response => {
       return response.json();
     })
-    .then(weatherJSON => console.log(weatherJSON.tempCelsius));
+    .then(weatherJSON => this.setState({tempCelsius: weatherJSON.tempCelsius}));
   }
 
   render(){
-    return <Hello />;
+    return <CurrentTemp tempCelsius={this.state.tempCelsius} />;
   }
 }
 
-const Hello = () => {
+const CurrentTemp = (props) => {
 return <div>
-  <h1>Hello World</h1>
+  <h2>Temperature in your location:</h2>
+  <p>{props.tempCelsius}</p>
 </div>;
 }
 
