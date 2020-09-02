@@ -41,8 +41,8 @@ class App extends React.Component {
 
 const CurrentTemp = (props) => {
 return <div>
-  <h2>Temperature in your location:</h2>
-  <p>{props.tempCelsius}</p>
+  <h2>Temp for your location:</h2>
+  <p>{props.tempCelsius}&deg;C</p>
 </div>;
 }
 
