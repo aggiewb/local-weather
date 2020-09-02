@@ -32,7 +32,10 @@ class App extends React.Component {
   }
 
   render(){
-    return <CurrentTemp tempCelsius={this.state.tempCelsius} />;
+    return <section>
+      <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
+      <CurrentTemp tempCelsius={this.state.tempCelsius} />
+    </section>
   }
 }
 
