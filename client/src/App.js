@@ -10,7 +10,7 @@ class App extends React.Component {
     navigator.geolocation.getCurrentPosition(position => this.success(position));
   }
 
-  //TODO: fetch api in ./server which fetches the freeCodeCamp api
+  //TODO: Use weatherJSON to setState to a temp property
   success(position){
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
@@ -18,6 +18,10 @@ class App extends React.Component {
     fetch(`/${longitude}/${latitude}`, {
       method: 'GET',
     })
+    .then(response => {
+      return response.json();
+    })
+    .then(weatherJSON => console.log(weatherJSON.tempCelsius));
   }
 
   render(){
