@@ -59,6 +59,7 @@ return <div>
 </div>;
 }
 
+//TODO: Add icons to display depending on each weather type
 const WeatherDescription = props => {
   return <div>
     <p>{props.type}</p>
