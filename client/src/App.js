@@ -18,7 +18,6 @@ class App extends React.Component {
     navigator.geolocation.getCurrentPosition(position => this.success(position));
   }
 
-  //TODO: Use weatherJSON to setState to a temp property
   success(position){
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
