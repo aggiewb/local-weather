@@ -49,8 +49,8 @@ class App extends React.Component {
 
 const CurrentTemp = (props) => {
 return <div>
-  <h2>{props.location}</h2>
-  <p>{props.tempCelsius}&deg;C</p>
+  <h2>{props.location ? props.location : 'Loading weather...'}</h2>
+  {props.location && <p>{props.tempCelsius}&deg;C</p>}
 </div>;
 }
 
