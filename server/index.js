@@ -7,13 +7,13 @@ app.listen(5000, () => console.log('Express server started'));
 app.get('/:longitude/:latitude', (request, response) => {
     const longitude = parseFloat(request.params.longitude);
     const latitude = parseFloat(request.params.latitude);
-    let tempCelsius = 0;
     fetch(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
     .then(fetchResponse => fetchResponse.json())
     .then(weatherJSON => {
-        tempCelsius = weatherJSON.main.temp;
-        response.json({tempCelsius});
-    });
+        const tempCelsius = weatherJSON.main.temp;
+        const location = weatherJSON.name;
+        response.json({tempCelsius, location});
+    })
 });
 
 app.use((request, response) => {

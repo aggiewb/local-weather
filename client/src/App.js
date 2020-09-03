@@ -5,7 +5,8 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      tempCelsius: 0
+      tempCelsius: 0,
+      location: ''
     }
   }
 
@@ -28,20 +29,23 @@ class App extends React.Component {
     .then(response => {
       return response.json();
     })
-    .then(weatherJSON => this.setState({tempCelsius: weatherJSON.tempCelsius}));
+    .then(weatherJSON => {
+      this.setState({tempCelsius: weatherJSON.tempCelsius});
+      this.setState({location: weatherJSON.location})
+    })
   }
 
   render(){
     return <section>
       <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
-      <CurrentTemp tempCelsius={this.state.tempCelsius} />
+      <CurrentTemp tempCelsius={this.state.tempCelsius} location={this.state.location}/>
     </section>
   }
 }
 
 const CurrentTemp = (props) => {
 return <div>
-  <h2>Temp for your location:</h2>
+  <h2>{props.location}</h2>
   <p>{props.tempCelsius}&deg;C</p>
 </div>;
 }
