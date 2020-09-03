@@ -27,12 +27,17 @@ class App extends React.Component {
       method: 'GET',
     })
     .then(response => {
-      return response.json();
+      if(response.ok){
+        return response.json();
+      } else {
+        throw new Error(Response.statusText);
+      }
     })
     .then(weatherJSON => {
       this.setState({tempCelsius: weatherJSON.tempCelsius});
       this.setState({location: weatherJSON.location})
     })
+    .catch(error => console.log(error));
   }
 
   render(){
