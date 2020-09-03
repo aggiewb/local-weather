@@ -18,7 +18,8 @@ app.get('/:longitude/:latitude', (request, response) => {
     .then(weatherJSON => {
         const tempCelsius = weatherJSON.main.temp;
         const location = weatherJSON.name;
-        response.json({tempCelsius, location});
+        const type = weatherJSON.weather[0].main;
+        response.json({tempCelsius, location, type});
     })
     .catch(error => console.log(error));
 });
