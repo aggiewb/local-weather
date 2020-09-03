@@ -1,0 +1,9 @@
+body {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background-color: #5e5746;
+  color: #0cf4f5;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.5rem;
+}
