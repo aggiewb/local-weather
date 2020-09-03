@@ -1,7 +1,7 @@
 # local-weather
 https://www.freecodecamp.org/learn/coding-interview-prep/take-home-projects/show-the-local-weather
 
-#Objective: Build a CodePen.io app that is functionally similar to this: https://codepen.io/freeCodeCamp/full/bELRjV.
+Objective: Build a CodePen.io app that is functionally similar to this: https://codepen.io/freeCodeCamp/full/bELRjV.
 
 Rule #1: Don't look at the example project's code. Figure it out for yourself.
 
