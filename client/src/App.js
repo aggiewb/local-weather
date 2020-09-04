@@ -6,7 +6,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       tempCelsius: 0,
-      location: ''
+      location: '',
+      type: '',
     }
   }
 
@@ -33,8 +34,10 @@ class App extends React.Component {
       }
     })
     .then(weatherJSON => {
-      this.setState({tempCelsius: weatherJSON.tempCelsius});
-      this.setState({location: weatherJSON.location})
+      const stateKeys = Object.keys(this.state);
+      for(let i = 0; i < stateKeys.length; i++){
+        this.setState({[stateKeys[i]]: weatherJSON[stateKeys[i]]});
+      }
     })
     .catch(error => console.log(error));
   }
@@ -43,15 +46,33 @@ class App extends React.Component {
     return <section>
       <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
       <CurrentTemp tempCelsius={this.state.tempCelsius} location={this.state.location}/>
+      <WeatherDescription type={this.state.type}/>
     </section>
   }
 }
 
-const CurrentTemp = (props) => {
+const CurrentTemp = props => {
 return <div>
   <h2>{props.location ? props.location : 'Loading weather...'}</h2>
-  {props.location && <p>{props.tempCelsius}&deg;C</p>}
+  {props.location && <p class="temp">{props.tempCelsius}&deg;C</p>}
 </div>;
+}
+
+const WeatherDescription = props => {
+  const weatherImages = {};
+
+  ['Thunderstorm', 'Drizzle', 'Rain', 'Snow', 'Tornado', 'Squall', 'Dust', 'Smoke', 'Clear', 'Clouds'].forEach(type => {
+    weatherImages[type] = `../weather_icons/${type.toLowerCase()}.png`;
+  });
+
+  ['Mist', 'Haze', 'Fog', 'Sand', 'Ash'].forEach(type => {
+    weatherImages[type] = '../weather_icons/atmosphere.png';
+  });
+  
+  return <div>
+    <div><img src={weatherImages[props.type]} alt={props.type}/></div>
+    {props.type && <p>{props.type}</p>}
+  </div>;
 }
 
 export default App;
