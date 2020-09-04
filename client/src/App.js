@@ -38,7 +38,6 @@ class App extends React.Component {
       for(let i = 0; i < stateKeys.length; i++){
         this.setState({[stateKeys[i]]: weatherJSON[stateKeys[i]]});
       }
-      console.log(this.state.type, this.state.icon);
     })
     .catch(error => console.log(error));
   }
@@ -55,14 +54,24 @@ class App extends React.Component {
 const CurrentTemp = props => {
 return <div>
   <h2>{props.location ? props.location : 'Loading weather...'}</h2>
-  {props.location && <p>{props.tempCelsius}&deg;C</p>}
+  {props.location && <p class="temp">{props.tempCelsius}&deg;C</p>}
 </div>;
 }
 
-//TODO: Add icons to display depending on each weather type
 const WeatherDescription = props => {
+  const weatherImages = {};
+
+  ['Thunderstorm', 'Drizzle', 'Rain', 'Snow', 'Tornado', 'Squall', 'Dust', 'Smoke', 'Clear', 'Clouds'].forEach(type => {
+    weatherImages[type] = `../weather_icons/${type.toLowerCase()}.png`;
+  });
+
+  ['Mist', 'Haze', 'Fog', 'Sand', 'Ash'].forEach(type => {
+    weatherImages[type] = '../weather_icons/atmosphere.png';
+  });
+  
   return <div>
-    <p>{props.type}</p>
+    <div><img src={weatherImages[props.type]} alt={props.type}/></div>
+    {props.type && <p>{props.type}</p>}
   </div>;
 }
 
