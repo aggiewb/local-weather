@@ -3,14 +3,10 @@ h1, h2 {
   font-size: 1.5rem;
 }
 
-h2 {
-  margin-bottom: 5px;
-}
-
-img {
-  margin-right: 10px;
+h2, p {
+  margin-bottom: 10px;
 }
 
 p {
-  margin: 5px auto;
+  margin: 10px auto;
 }
