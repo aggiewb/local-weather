@@ -67,17 +67,21 @@ class App extends React.Component {
 }
 
 const CurrentLocation = props => {
-  return <div>
-    <h2>{props.location ? props.location : 'Loading weather...'}</h2>
-  </div>;
+  return <h2>
+    {props.location ? props.location : 'Loading weather...'}
+  </h2>;
 }
 
 const Temp = props => {
-  return <span>{props.unit && <p class="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}</span>
+  return <span>
+    {props.unit && <p class="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
+  </span>;
 }
 
 const TempUnit = props => {
-  return <span onClick={props.unitToggle}>{props.unit && <a href="#">{props.unit === 'C' ? 'C' : 'F'}</a>}</span>;
+  return <span onClick={props.unitToggle}>
+    {props.unit && <a href="#">{props.unit === 'C' ? 'C' : 'F'}</a>}
+  </span>;
 }
 
 const WeatherDescription = props => {
