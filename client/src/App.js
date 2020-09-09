@@ -6,11 +6,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       tempCelsius: 0,
-      tempFahrenheit: 0,
+      tempFahrenheit: this.calculateFahrenheit(this.tempCelsius),
       currentTempUnit: 'C',
       location: '',
       type: '',
     }
+    this.calculateFahrenheit = this.calculateFahrenheit.bind(this);
   }
 
   componentDidMount(){
@@ -24,6 +25,10 @@ class App extends React.Component {
   handleTempToggle(){
 
   }
+
+  calculateFahrenheit(celsiusTemp){
+    return Math.round(celsiusTemp / 5 * 9 + 32);
+  } 
 
   success(position){
     const coordinates = position.coords;
@@ -83,7 +88,7 @@ const WeatherDescription = props => {
 }
 
 const TempUnit = props => {
-  
+
 }
 
 export default App;
