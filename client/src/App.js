@@ -62,6 +62,7 @@ class App extends React.Component {
       <Temp tempCelsius={this.state.tempCelsius} tempFahrenheit={this.state.tempFahrenheit} unit={this.state.currentTempUnit}/>
       <TempUnit unit={this.state.currentTempUnit} unitToggle={() => this.handleTempUnitToggle()}/>
       <WeatherDescription type={this.state.type}/>
+      <Footer />
     </section>
   }
 }
@@ -99,6 +100,12 @@ const WeatherDescription = props => {
     <div><img src={weatherImages[props.type]} alt={props.type}/></div>
     {props.type && <p>{props.type}</p>}
   </div>;
+}
+
+const Footer = () => {
+  return <footer>
+    <a href="https://www.aggiewheelerbateman.com" rel="noreferrer noopener" target="_blank">Aggie Wheeler Bateman</a> &copy; {new Date().getFullYear()}
+  </footer>;
 }
 
 export default App;
