@@ -80,7 +80,7 @@ const Temp = props => {
 
 const TempUnit = props => {
   return <span onClick={props.unitToggle}>
-    {props.unit && <a href="#">{props.unit === 'C' ? 'C' : 'F'}</a>}
+    {props.unit && <button>{props.unit === 'C' ? 'C' : 'F'}</button>}
   </span>;
 }
 
