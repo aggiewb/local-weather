@@ -28,4 +28,4 @@ app.use((request, response) => {
     response.type('text/html');
     response.status(404);
     response.send('<h1>404 error</h1><p>Sorry! That page couldn\'t be found.</p>');
-})
+});
