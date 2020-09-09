@@ -10,7 +10,7 @@
     "rules": {
         "semi": ["error"],
         "prefer-const": "error",
-        "no-console": "error",
+        "no-console": "warning",
         "indent": ["error", 4],
         "eqeqeq": "error",
         "strict": ["error", "function"],
