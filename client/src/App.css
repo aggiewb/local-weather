@@ -4,12 +4,15 @@ h1, h2 {
 }
 
 h2 {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 
 p {
   margin: 10px auto;
-  display: inline;
+}
+
+.temp {
+  display: inline-block;
 }
 
 button {
@@ -25,4 +28,13 @@ button {
 
 button:hover {
   cursor: pointer;
+}
+
+footer {
+  margin-top: 40px;
+  font-size: 1rem;
+}
+
+a {
+  color: #0cf4f5;
 }
