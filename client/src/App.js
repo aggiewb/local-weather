@@ -6,9 +6,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       tempCelsius: 0,
+      tempFahrenheit: 0,
+      currentTempUnit: '',
       location: '',
       type: '',
     }
+    this.calculateFahrenheit = this.calculateFahrenheit.bind(this);
   }
 
   componentDidMount(){
@@ -18,6 +21,14 @@ class App extends React.Component {
   handleLoad(){
     navigator.geolocation.getCurrentPosition(position => this.success(position));
   }
+
+  handleTempUnitToggle(){
+    this.setState({currentTempUnit: this.state.currentTempUnit === 'C' ? 'F' : 'C'})
+  }
+
+  calculateFahrenheit(celsiusTemp){
+    return celsiusTemp / 5 * 9 + 32;
+  } 
 
   success(position){
     const coordinates = position.coords;
@@ -34,10 +45,12 @@ class App extends React.Component {
       }
     })
     .then(weatherJSON => {
-      const stateKeys = Object.keys(this.state);
-      for(let i = 0; i < stateKeys.length; i++){
-        this.setState({[stateKeys[i]]: weatherJSON[stateKeys[i]]});
+      const weatherJSONKeys = Object.keys(weatherJSON);
+      for(let i = 0; i < weatherJSONKeys.length; i++){
+        this.setState({[weatherJSONKeys[i]]: weatherJSON[weatherJSONKeys[i]]});
       }
+      this.setState({tempFahrenheit: this.calculateFahrenheit(this.state.tempCelsius)})
+      this.setState({currentTempUnit: 'C'})
     })
     .catch(error => console.log(error));
   }
@@ -45,17 +58,30 @@ class App extends React.Component {
   render(){
     return <section>
       <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
-      <CurrentTemp tempCelsius={this.state.tempCelsius} location={this.state.location}/>
+      <CurrentLocation location={this.state.location}/>
+      <Temp tempCelsius={this.state.tempCelsius} tempFahrenheit={this.state.tempFahrenheit} unit={this.state.currentTempUnit}/>
+      <TempUnit unit={this.state.currentTempUnit} unitToggle={() => this.handleTempUnitToggle()}/>
       <WeatherDescription type={this.state.type}/>
     </section>
   }
 }
 
-const CurrentTemp = props => {
-return <div>
-  <h2>{props.location ? props.location : 'Loading weather...'}</h2>
-  {props.location && <p class="temp">{props.tempCelsius}&deg;C</p>}
-</div>;
+const CurrentLocation = props => {
+  return <h2>
+    {props.location ? props.location : 'Loading weather...'}
+  </h2>;
+}
+
+const Temp = props => {
+  return <span>
+    {props.unit && <p class="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
+  </span>;
+}
+
+const TempUnit = props => {
+  return <span onClick={props.unitToggle}>
+    {props.unit && <a href="#">{props.unit === 'C' ? 'C' : 'F'}</a>}
+  </span>;
 }
 
 const WeatherDescription = props => {
