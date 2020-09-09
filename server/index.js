@@ -8,20 +8,20 @@ app.get('/:longitude/:latitude', (request, response) => {
     const longitude = parseFloat(request.params.longitude);
     const latitude = parseFloat(request.params.latitude);
     fetch(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
-    .then(fetchResponse => {
-        if(fetchResponse.ok){
-            return fetchResponse.json();
-        } else {
-            throw new Error(fetchResponse.statusText);
-        }
-    })
-    .then(weatherJSON => {
-        const tempCelsius = weatherJSON.main.temp;
-        const location = weatherJSON.name;
-        const type = weatherJSON.weather[0].main;
-        response.json({tempCelsius, location, type});
-    })
-    .catch(error => console.log(error));
+        .then(fetchResponse => {
+            if(fetchResponse.ok){
+                return fetchResponse.json();
+            } else {
+                throw new Error(fetchResponse.statusText);
+            }
+        })
+        .then(weatherJSON => {
+            const tempCelsius = weatherJSON.main.temp;
+            const location = weatherJSON.name;
+            const type = weatherJSON.weather[0].main;
+            response.json({tempCelsius, location, type});
+        })
+        .catch(error => response.json(error));
 });
 
 app.use((request, response) => {
