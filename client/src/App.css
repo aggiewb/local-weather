@@ -9,4 +9,9 @@ h2, p {
 
 p {
   margin: 10px auto;
+  display: inline;
+}
+
+a {
+  color: #0cf4f5;
 }
