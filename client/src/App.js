@@ -6,6 +6,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       tempCelsius: 0,
+      tempFahrenheit: 0,
+      currentTempUnit: 'C',
       location: '',
       type: '',
     }
@@ -17,6 +19,10 @@ class App extends React.Component {
 
   handleLoad(){
     navigator.geolocation.getCurrentPosition(position => this.success(position));
+  }
+
+  handleTempToggle(){
+
   }
 
   success(position){
@@ -45,7 +51,7 @@ class App extends React.Component {
   render(){
     return <section>
       <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
-      <CurrentTemp tempCelsius={this.state.tempCelsius} location={this.state.location}/>
+      <CurrentTemp tempCelsius={this.state.tempCelsius} location={this.state.location} unit={this.state.currentTempUnit} tempToggle={() => this.handleTempToggle()}/>
       <WeatherDescription type={this.state.type}/>
     </section>
   }
@@ -54,7 +60,8 @@ class App extends React.Component {
 const CurrentTemp = props => {
 return <div>
   <h2>{props.location ? props.location : 'Loading weather...'}</h2>
-  {props.location && <p class="temp">{props.tempCelsius}&deg;C</p>}
+  {props.location 
+  && <p class="temp">{props.tempCelsius}&deg;<span><TempUnit unit={props.unit}/></span></p>}
 </div>;
 }
 
@@ -73,6 +80,10 @@ const WeatherDescription = props => {
     <div><img src={weatherImages[props.type]} alt={props.type}/></div>
     {props.type && <p>{props.type}</p>}
   </div>;
+}
+
+const TempUnit = props => {
+  
 }
 
 export default App;
