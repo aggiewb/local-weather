@@ -26,4 +26,4 @@ app.use((request, response) => {
     response.send('<h1>404 error</h1><p>Sorry! That page couldn\'t be found.</p>');
 });
 
-module.exports = {server}
+module.exports = {server};
