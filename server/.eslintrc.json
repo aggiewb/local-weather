@@ -10,7 +10,6 @@
     "rules": {
         "semi": ["error"],
         "prefer-const": "error",
-        "no-console": "warning",
         "indent": ["error", 4],
         "eqeqeq": "error",
         "strict": ["error", "function"],
@@ -23,5 +22,10 @@
             "allowTemplateLiterals": true,
             "avoidEscape": true 
         }]
-    }
+    },
+    "globals": {
+      "describe": "readonly",
+      "it": "readonly",
+      "after": "readonly"
+  }
 }
