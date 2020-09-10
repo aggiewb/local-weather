@@ -21,7 +21,7 @@ describe('SERVER ROUTES', function(){
             fetch('http://localhost:5000/north/west')
                 .then(response => response.json())
                 .then(data => {
-                    assert.isTrue(data.hasOwnProperty('error'));
+                    assert.isTrue(Object.prototype.hasOwnProperty.call(data, 'error'));
                     done();
                 });
         });
