@@ -1,5 +1,5 @@
 # local-weather
-This project was created with Node on the backend (server directory), and React on the front end (client).
+This project was created with Node on the backend (server directory), and React on the front end (client directory).
 
 https://www.freecodecamp.org/learn/coding-interview-prep/take-home-projects/show-the-local-weather
 
