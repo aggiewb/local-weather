@@ -1,4 +1,6 @@
 # local-weather
+This project was created with Node on the backend (server directory), and React on the front end (client).
+
 https://www.freecodecamp.org/learn/coding-interview-prep/take-home-projects/show-the-local-weather
 
 Objective: Build a CodePen.io app that is functionally similar to this: https://codepen.io/freeCodeCamp/full/bELRjV.
