@@ -11,4 +11,4 @@ Launches the server, and automatically restarting the node application when file
 Runs a linter against the JS files in the server directory with the rules indicated in the .eslintrc.json file.
 
 ### `nyc mocha Node.test.js`
-Runs Mocha/Chai testing in the Node.test.js file, which tests the server's index.js file.
+Runs Mocha/Chai testing and code coverage in the Node.test.js file, which tests the server's index.js file.
