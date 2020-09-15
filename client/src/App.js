@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 
 class App extends React.Component {
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {
       tempCelsius: 0,
       tempFahrenheit: 0,
