@@ -1,8 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow, mount } from 'enzyme';
 import App from './App';
 
 //smoke test for rendering of the App
 it('renders', () => {
-  ReactDOM.render(<App />, document.createElement('div'));
+  mount(<App />);
+});
+
+//shallow renders the component but none of the React child components
+it('shallow render', () => {
+  shallow(<App />);
 });
