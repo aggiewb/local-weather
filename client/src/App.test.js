@@ -2,6 +2,18 @@ import React from 'react';
 import { shallow, mount } from 'enzyme';
 import App from './App';
 
+const EXPECTED_LOCATION = 'Seattle, WA';
+const EXPECTED_CELSIUS = 30;
+const EXPECTED_CURRENT_TEMP_UNIT = 'C';
+const EXPECTED_TYPE = 'Haze';
+
+const mockSuccessResponse = {
+  tempCelsius: EXPECTED_CELSIUS,
+  currentTempUnit: EXPECTED_CURRENT_TEMP_UNIT,
+  location: EXPECTED_LOCATION,
+  type: EXPECTED_TYPE,
+};
+
 //smoke test for rendering of the App
 it('renders', () => {
   mount(<App />);
@@ -37,9 +49,21 @@ it('should shallow render all child components, and initialize their props', () 
   expect(footer.exists()).toEqual(true);
 });
 
-it('should update the location of CurrentLocation when state location changes', () => {
+it('should update the location property of CurrentLocation when state location changes', () => {
   const component = shallow(<App />);
-  const EXPECTED_LOCATION = 'Seattle, WA';
   component.setState({location: EXPECTED_LOCATION});
   expect(component.find('CurrentLocation').prop('location')).toEqual(EXPECTED_LOCATION);
+});
+
+//TODO: mock handleLoad(), geolocation, and fetch()
+it.only('should update the tempCelsius, tempFahrenheit, and unit properties of Temp when state tempCelsius, tempFahrenheit, and currentTempUnit changes', () => {
+  const eventListeners = {};
+  window.addEventListener = jest.fn((event, callback) => {
+    eventListeners[event] = callback;
+  });
+  navigator.geolocation = {getCurrentPosition: (callback) => {
+    callback({latitude: 0, longitude: 0});
+  }};
+  const component = shallow(<App />);
+  eventListeners.load();
 });

@@ -31,6 +31,7 @@ class App extends React.Component {
   } 
 
   success(position){
+    console.log('in success')
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
     const latitude = coordinates.latitude;
