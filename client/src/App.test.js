@@ -7,13 +7,6 @@ const EXPECTED_CELSIUS = 30;
 const EXPECTED_CURRENT_TEMP_UNIT = 'C';
 const EXPECTED_TYPE = 'Haze';
 
-const mockSuccessResponse = {
-  tempCelsius: EXPECTED_CELSIUS,
-  currentTempUnit: EXPECTED_CURRENT_TEMP_UNIT,
-  location: EXPECTED_LOCATION,
-  type: EXPECTED_TYPE,
-};
-
 //smoke test for rendering of the App
 it('renders', () => {
   mount(<App />);
@@ -55,15 +48,39 @@ it('should update the location property of CurrentLocation when state location c
   expect(component.find('CurrentLocation').prop('location')).toEqual(EXPECTED_LOCATION);
 });
 
-//TODO: mock handleLoad(), geolocation, and fetch()
 it.only('should update the tempCelsius, tempFahrenheit, and unit properties of Temp when state tempCelsius, tempFahrenheit, and currentTempUnit changes', () => {
   const eventListeners = {};
-  window.addEventListener = jest.fn((event, callback) => {
-    eventListeners[event] = callback;
-  });
-  navigator.geolocation = {getCurrentPosition: (callback) => {
-    callback({latitude: 0, longitude: 0});
-  }};
+  window.addEventListener = (eventName, callback) => {
+    eventListeners[eventName] = callback;
+  };
+
   const component = shallow(<App />);
+
+  const geolocation = {};
+  const getCurrentPosition = (callback) => {
+    callback({coords: {longitude: 0, latitude: 0}});
+  };
+  geolocation.getCurrentPosition = getCurrentPosition;
+  navigator.geolocation = geolocation;
+
+  //TODO: explanation of fetch and Promises
+  fetch = () => {
+    return new Promise((resolve) => {
+      const response = {};
+      response.ok = true;
+      response.json = () => {
+        return new Promise((success) => {
+          const weatherJSON = {
+            tempCelsius: EXPECTED_CELSIUS,
+            currentTempUnit: EXPECTED_CURRENT_TEMP_UNIT,
+            location: EXPECTED_LOCATION,
+            type: EXPECTED_TYPE,
+          };
+          success(weatherJSON);
+        });
+      }
+      resolve(response);
+    });
+  };
   eventListeners.load();
 });
