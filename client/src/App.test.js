@@ -152,3 +152,10 @@ it('should not render a p tag if no unit is assigned to props', () => {
   const component = shallow(<Temp />);
   expect(component.find('p').exists()).toEqual(false);
 });
+
+it('should render a button with the text of the unit passed in', () => {
+  const component = shallow(<TempUnit unit={CELSIUS_TEMP_UNIT}/>);
+  const button = component.find('button');
+  expect(button.exists()).toEqual(true);
+  expect(button.text()).toEqual(CELSIUS_TEMP_UNIT);
+});
