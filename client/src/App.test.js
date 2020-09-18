@@ -4,6 +4,7 @@ import App from './App';
 
 const EXPECTED_LOCATION = 'Seattle, WA';
 const EXPECTED_CELSIUS = 30;
+const EXPECTED_FAHRENHEIT = 86;
 const EXPECTED_CURRENT_TEMP_UNIT = 'C';
 const EXPECTED_TYPE = 'Haze';
 
@@ -42,13 +43,8 @@ it('should shallow render all child components, and initialize their props', () 
   expect(footer.exists()).toEqual(true);
 });
 
-it('should update the location property of CurrentLocation when state location changes', () => {
-  const component = shallow(<App />);
-  component.setState({location: EXPECTED_LOCATION});
-  expect(component.find('CurrentLocation').prop('location')).toEqual(EXPECTED_LOCATION);
-});
-
-it.only('should update the tempCelsius, tempFahrenheit, and unit properties of Temp when state tempCelsius, tempFahrenheit, and currentTempUnit changes', () => {
+it('should update child component props after load', (done) => {
+  //recreate events listeners added to the window object to control when it gets called
   const eventListeners = {};
   window.addEventListener = (eventName, callback) => {
     eventListeners[eventName] = callback;
@@ -56,6 +52,8 @@ it.only('should update the tempCelsius, tempFahrenheit, and unit properties of T
 
   const component = shallow(<App />);
 
+  //recreate geolocation and getCurrentPosition objects normally on the navigator object
+  //but does not exist in global
   const geolocation = {};
   const getCurrentPosition = (callback) => {
     callback({coords: {longitude: 0, latitude: 0}});
@@ -63,24 +61,89 @@ it.only('should update the tempCelsius, tempFahrenheit, and unit properties of T
   geolocation.getCurrentPosition = getCurrentPosition;
   navigator.geolocation = geolocation;
 
-  //TODO: explanation of fetch and Promises
+  //recreate fetch response to control the data that is to be tested
+  const json = () => {
+    return new Promise((resolve) => {
+      const weatherJSON = {
+        tempCelsius: EXPECTED_CELSIUS,
+        currentTempUnit: EXPECTED_CURRENT_TEMP_UNIT,
+        location: EXPECTED_LOCATION,
+        type: EXPECTED_TYPE,
+      };
+      resolve(weatherJSON);
+    });
+  };
+  
+  const response = {
+    ok: true,
+    json
+  };
+
   fetch = () => {
     return new Promise((resolve) => {
-      const response = {};
-      response.ok = true;
-      response.json = () => {
-        return new Promise((success) => {
-          const weatherJSON = {
-            tempCelsius: EXPECTED_CELSIUS,
-            currentTempUnit: EXPECTED_CURRENT_TEMP_UNIT,
-            location: EXPECTED_LOCATION,
-            type: EXPECTED_TYPE,
-          };
-          success(weatherJSON);
-        });
-      }
       resolve(response);
     });
   };
   eventListeners.load();
+  process.nextTick(() => {
+    expect(component.find('CurrentLocation').prop('location')).toEqual(EXPECTED_LOCATION);
+    const temp = component.find('Temp');
+    expect(temp.prop('unit')).toEqual(EXPECTED_CURRENT_TEMP_UNIT);
+    expect(temp.prop('tempFahrenheit')).toEqual(EXPECTED_FAHRENHEIT);
+    expect(temp.prop('tempCelsius')).toEqual(EXPECTED_CELSIUS);
+    expect(component.find('TempUnit').prop('unit')).toEqual(EXPECTED_CURRENT_TEMP_UNIT);
+    expect(component.find('WeatherDescription').prop('type')).toEqual(EXPECTED_TYPE);
+    done();
+  });
+});
+
+it('should change temp unit from C to F and back when the unit toggle function is called', () => {
+  const component = shallow(<App />);
+  component.setState({currentTempUnit: 'C'});
+  const tempUnit = component.find('TempUnit');
+  const unitToggle = tempUnit.prop('unitToggle');
+  expect(unitToggle).not.toBeUndefined();
+  unitToggle();
+  expect(component.find('TempUnit').prop('unit')).toEqual('F');
+  unitToggle();
+  expect(component.find('TempUnit').prop('unit')).toEqual('C');
+});
+
+it('should render the error element if the response is falsey', (done) => {
+  //recreate events listeners added to the window object to control when it gets called
+  const eventListeners = {};
+  window.addEventListener = (eventName, callback) => {
+    eventListeners[eventName] = callback;
+  };
+
+  const component = shallow(<App />);
+
+  //recreate geolocation and getCurrentPosition objects normally on the navigator object
+  //but does not exist in global
+  const geolocation = {};
+  const getCurrentPosition = (callback) => {
+    callback({coords: {longitude: 0, latitude: 0}});
+  };
+  geolocation.getCurrentPosition = getCurrentPosition;
+  navigator.geolocation = geolocation;
+
+  //recreate fetch response to control the data that is to be tested
+  const EXPECTED_STATUS = 'Something went wrong!'
+  const response = {
+    ok: false,
+    statusText: EXPECTED_STATUS
+  };
+
+  fetch = () => {
+    return new Promise((resolve) => {
+      resolve(response);
+    });
+  };
+  eventListeners.load();
+  process.nextTick(() => {
+    const error = component.find('p');
+    expect(error.exists()).toEqual(true);
+    expect(error.text()).toEqual(EXPECTED_STATUS);
+    done();
+  });
 });
