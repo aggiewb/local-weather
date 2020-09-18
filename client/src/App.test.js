@@ -164,3 +164,10 @@ it('should not render a button if no unit is assigned to props', () => {
   const component = shallow(<TempUnit />);
   expect(component.find('button').exists()).toEqual(false);
 });
+
+it('should call unitToggle() when the span is clicked', () => {
+  const unitToggle = jest.fn();
+  const component = shallow(<TempUnit unitToggle={unitToggle}/>);
+  component.find('span').simulate('click');
+  expect(unitToggle).toHaveBeenCalled();
+});
