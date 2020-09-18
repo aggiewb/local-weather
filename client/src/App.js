@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
+export default class App extends React.Component {
+  constructor(){
+    super();
     this.state = {
       tempCelsius: 0,
       tempFahrenheit: 0,
       currentTempUnit: '',
       location: '',
       type: '',
+      errorMessage: ''
     }
     this.calculateFahrenheit = this.calculateFahrenheit.bind(this);
   }
@@ -41,7 +42,7 @@ class App extends React.Component {
       if(response.ok){
         return response.json();
       } else {
-        throw new Error(Response.statusText);
+        throw new Error(response.statusText);
       }
     })
     .then(weatherJSON => {
@@ -52,40 +53,43 @@ class App extends React.Component {
       this.setState({tempFahrenheit: this.calculateFahrenheit(this.state.tempCelsius)})
       this.setState({currentTempUnit: 'C'})
     })
-    .catch(error => console.log(error));
+    .catch(error => this.setState({errorMessage: error.message}));
   }
 
   render(){
-    return <section>
+    const error = <p>{this.state.errorMessage}</p>;
+    const content = <section>
       <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
       <CurrentLocation location={this.state.location}/>
       <Temp tempCelsius={this.state.tempCelsius} tempFahrenheit={this.state.tempFahrenheit} unit={this.state.currentTempUnit}/>
       <TempUnit unit={this.state.currentTempUnit} unitToggle={() => this.handleTempUnitToggle()}/>
       <WeatherDescription type={this.state.type}/>
       <Footer />
-    </section>
+    </section>;
+    return this.state.errorMessage ? error : content;
   }
 }
 
-const CurrentLocation = props => {
+export const LOADING_MESSAGE = 'Loading weather...';
+export const CurrentLocation = props => {
   return <h2>
-    {props.location ? props.location : 'Loading weather...'}
+    {props.location ? props.location : LOADING_MESSAGE}
   </h2>;
 }
 
-const Temp = props => {
+export const Temp = props => {
   return <span>
-    {props.unit && <p class="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
+    {props.unit && <p className="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
   </span>;
 }
 
-const TempUnit = props => {
+export const TempUnit = props => {
   return <span onClick={props.unitToggle}>
-    {props.unit && <button>{props.unit === 'C' ? 'C' : 'F'}</button>}
+    {props.unit && <button>{props.unit}</button>}
   </span>;
 }
 
-const WeatherDescription = props => {
+export const WeatherDescription = props => {
   const weatherImages = {};
 
   ['Thunderstorm', 'Drizzle', 'Rain', 'Snow', 'Tornado', 'Squall', 'Dust', 'Smoke', 'Clear', 'Clouds'].forEach(type => {
@@ -107,5 +111,3 @@ const Footer = () => {
     <a href="https://www.aggiewheelerbateman.com" rel="noreferrer noopener" target="_blank">Aggie Wheeler Bateman</a> &copy; {new Date().getFullYear()}
   </footer>;
 }
-
-export default App;
