@@ -209,3 +209,9 @@ it('should render a p tag with text of the type if type is assigned', () => {
   expect(description.exists()).toEqual(true);
   expect(description.text()).toEqual(type);
 });
+
+it('should not render a p tag if no value is assigned to type', () => {
+  const component = shallow(<WeatherDescription />);
+  const description = component.find('p');
+  expect(description.exists()).toEqual(false);
+});
