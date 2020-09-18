@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import App, { Temp, TempUnit } from './App';
+import App, { Temp, TempUnit, CurrentLocation, WeatherDescription } from './App';
 
 const EXPECTED_LOCATION = 'Seattle, WA';
 const EXPECTED_CELSIUS = 30;
@@ -170,4 +170,11 @@ it('should call unitToggle() when the span is clicked', () => {
   const component = shallow(<TempUnit unitToggle={unitToggle}/>);
   component.find('span').simulate('click');
   expect(unitToggle).toHaveBeenCalled();
+});
+
+it('should render an h2 with the location prop if a value assigned', () => {
+  const component = shallow(<CurrentLocation location={EXPECTED_LOCATION} />);
+  const header = component.find('h2');
+  expect(header.exists()).toEqual(true);
+  expect(header.text()).toEqual(EXPECTED_LOCATION);
 });
