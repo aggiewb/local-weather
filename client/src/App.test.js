@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import App, { Temp, TempUnit, CurrentLocation, WeatherDescription } from './App';
+import App, { Temp, TempUnit, CurrentLocation, WeatherDescription, LOADING_MESSAGE } from './App';
 
 const EXPECTED_LOCATION = 'Seattle, WA';
 const EXPECTED_CELSIUS = 30;
@@ -177,4 +177,11 @@ it('should render an h2 with the location prop if a value assigned', () => {
   const header = component.find('h2');
   expect(header.exists()).toEqual(true);
   expect(header.text()).toEqual(EXPECTED_LOCATION);
+});
+
+it('should render a loading message if no location is assigned', () => {
+  const component = shallow(<CurrentLocation />);
+  const header = component.find('h2');
+  expect(header.exists()).toEqual(true);
+  expect(header.text()).toEqual(LOADING_MESSAGE);
 });
