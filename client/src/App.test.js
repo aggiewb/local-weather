@@ -140,3 +140,10 @@ it('should render Celsius temperature if the temp unit is C', () => {
   expect(temperature.exists()).toEqual(true);
   expect(temperature.text()).toEqual(`${EXPECTED_CELSIUS}°`); 
 });
+
+it('should render Fahrenheit temperature if the temp unit is F', () => {
+  const component = shallow(<Temp unit={FAHRENHEIT_TEMP_UNIT} tempFahrenheit={EXPECTED_FAHRENHEIT}/>);
+  const temperature = component.find('p');
+  expect(temperature.exists()).toEqual(true);
+  expect(temperature.text()).toEqual(`${EXPECTED_FAHRENHEIT}°`); 
+});
