@@ -70,7 +70,7 @@ export default class App extends React.Component {
   }
 }
 
-const CurrentLocation = props => {
+export const CurrentLocation = props => {
   return <h2>
     {props.location ? props.location : 'Loading weather...'}
   </h2>;
@@ -88,7 +88,7 @@ export const TempUnit = props => {
   </span>;
 }
 
-const WeatherDescription = props => {
+export const WeatherDescription = props => {
   const weatherImages = {};
 
   ['Thunderstorm', 'Drizzle', 'Rain', 'Snow', 'Tornado', 'Squall', 'Dust', 'Smoke', 'Clear', 'Clouds'].forEach(type => {
