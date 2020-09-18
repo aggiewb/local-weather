@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-class App extends React.Component {
+export default class App extends React.Component {
   constructor(){
     super();
     this.state = {
@@ -76,13 +76,13 @@ const CurrentLocation = props => {
   </h2>;
 }
 
-const Temp = props => {
+export const Temp = props => {
   return <span>
     {props.unit && <p className="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
   </span>;
 }
 
-const TempUnit = props => {
+export const TempUnit = props => {
   return <span onClick={props.unitToggle}>
     {props.unit && <button>{props.unit === 'C' ? 'C' : 'F'}</button>}
   </span>;
@@ -110,5 +110,3 @@ const Footer = () => {
     <a href="https://www.aggiewheelerbateman.com" rel="noreferrer noopener" target="_blank">Aggie Wheeler Bateman</a> &copy; {new Date().getFullYear()}
   </footer>;
 }
-
-export default App;
