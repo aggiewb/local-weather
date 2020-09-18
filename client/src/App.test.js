@@ -193,3 +193,11 @@ it('should render an img with a source based on type when type is not an atmosph
   expect(image.prop('src')).toContain(validImageType.toLowerCase());
   expect(image.prop('alt')).toEqual(validImageType);
 });
+
+it('should render the atmosphere img if the type is an atmosphere and an alt of the type', () => {
+  const validAtmosphereType = 'Haze';
+  const component = shallow(<WeatherDescription type={validAtmosphereType}/>);
+  const image = component.find('img');
+  expect(image.prop('src')).toContain('atmosphere');
+  expect(image.prop('alt')).toEqual(validAtmosphereType);
+});
