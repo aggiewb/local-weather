@@ -147,3 +147,8 @@ it('should render Fahrenheit temperature if the temp unit is F', () => {
   expect(temperature.exists()).toEqual(true);
   expect(temperature.text()).toEqual(`${EXPECTED_FAHRENHEIT}°`); 
 });
+
+it('should not render a p tag if no unit is assigned to props', () => {
+  const component = shallow(<Temp />);
+  expect(component.find('p').exists()).toEqual(false);
+});
