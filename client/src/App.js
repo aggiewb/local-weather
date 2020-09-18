@@ -10,6 +10,7 @@ class App extends React.Component {
       currentTempUnit: '',
       location: '',
       type: '',
+      errorMessage: ''
     }
     this.calculateFahrenheit = this.calculateFahrenheit.bind(this);
   }
@@ -31,7 +32,6 @@ class App extends React.Component {
   } 
 
   success(position){
-    console.log('in success')
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
     const latitude = coordinates.latitude;
@@ -42,7 +42,7 @@ class App extends React.Component {
       if(response.ok){
         return response.json();
       } else {
-        throw new Error(Response.statusText);
+        throw new Error(response.statusText);
       }
     })
     .then(weatherJSON => {
@@ -53,18 +53,20 @@ class App extends React.Component {
       this.setState({tempFahrenheit: this.calculateFahrenheit(this.state.tempCelsius)})
       this.setState({currentTempUnit: 'C'})
     })
-    .catch(error => console.log(error));
+    .catch(error => this.setState({errorMessage: error.message}));
   }
 
   render(){
-    return <section>
+    const error = <p>{this.state.errorMessage}</p>;
+    const content = <section>
       <h1>freeCodeCamp Take Home Projects - Show the Local Weather</h1>
       <CurrentLocation location={this.state.location}/>
       <Temp tempCelsius={this.state.tempCelsius} tempFahrenheit={this.state.tempFahrenheit} unit={this.state.currentTempUnit}/>
       <TempUnit unit={this.state.currentTempUnit} unitToggle={() => this.handleTempUnitToggle()}/>
       <WeatherDescription type={this.state.type}/>
       <Footer />
-    </section>
+    </section>;
+    return this.state.errorMessage ? error : content;
   }
 }
 
@@ -76,7 +78,7 @@ const CurrentLocation = props => {
 
 const Temp = props => {
   return <span>
-    {props.unit && <p class="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
+    {props.unit && <p className="temp">{Math.round(props.unit === 'C' ? props.tempCelsius : props.tempFahrenheit)}&deg;</p>}
   </span>;
 }
 
