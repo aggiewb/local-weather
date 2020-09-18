@@ -70,9 +70,10 @@ export default class App extends React.Component {
   }
 }
 
+export const LOADING_MESSAGE = 'Loading weather...';
 export const CurrentLocation = props => {
   return <h2>
-    {props.location ? props.location : 'Loading weather...'}
+    {props.location ? props.location : LOADING_MESSAGE}
   </h2>;
 }
 
