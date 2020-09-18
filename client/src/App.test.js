@@ -185,3 +185,11 @@ it('should render a loading message if no location is assigned', () => {
   expect(header.exists()).toEqual(true);
   expect(header.text()).toEqual(LOADING_MESSAGE);
 });
+
+it('should render an img with a source based on type when type is not an atmosphere and an alt of the type', () => {
+  const validImageType = 'Thunderstorm';
+  const component = shallow(<WeatherDescription type={validImageType}/>);
+  const image = component.find('img');
+  expect(image.prop('src')).toContain(validImageType.toLowerCase());
+  expect(image.prop('alt')).toEqual(validImageType);
+});
