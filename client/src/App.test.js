@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import App from './App';
+import App, { Temp, TempUnit } from './App';
 
 const EXPECTED_LOCATION = 'Seattle, WA';
 const EXPECTED_CELSIUS = 30;
 const EXPECTED_FAHRENHEIT = 86;
-const EXPECTED_CURRENT_TEMP_UNIT = 'C';
+const CELSIUS_TEMP_UNIT = 'C';
+const FAHRENHEIT_TEMP_UNIT = 'F';
 const EXPECTED_TYPE = 'Haze';
 
 //recreate events listeners added to the window object to control when it gets called
@@ -66,7 +67,7 @@ it('should update child component props after load', (done) => {
     return new Promise((resolve) => {
       const weatherJSON = {
         tempCelsius: EXPECTED_CELSIUS,
-        currentTempUnit: EXPECTED_CURRENT_TEMP_UNIT,
+        currentTempUnit: CELSIUS_TEMP_UNIT,
         location: EXPECTED_LOCATION,
         type: EXPECTED_TYPE,
       };
@@ -88,10 +89,10 @@ it('should update child component props after load', (done) => {
   process.nextTick(() => {
     expect(component.find('CurrentLocation').prop('location')).toEqual(EXPECTED_LOCATION);
     const temp = component.find('Temp');
-    expect(temp.prop('unit')).toEqual(EXPECTED_CURRENT_TEMP_UNIT);
+    expect(temp.prop('unit')).toEqual(CELSIUS_TEMP_UNIT);
     expect(temp.prop('tempFahrenheit')).toEqual(EXPECTED_FAHRENHEIT);
     expect(temp.prop('tempCelsius')).toEqual(EXPECTED_CELSIUS);
-    expect(component.find('TempUnit').prop('unit')).toEqual(EXPECTED_CURRENT_TEMP_UNIT);
+    expect(component.find('TempUnit').prop('unit')).toEqual(CELSIUS_TEMP_UNIT);
     expect(component.find('WeatherDescription').prop('type')).toEqual(EXPECTED_TYPE);
     done();
   });
@@ -99,14 +100,14 @@ it('should update child component props after load', (done) => {
 
 it('should change temp unit from C to F and back when the unit toggle function is called', () => {
   const component = shallow(<App />);
-  component.setState({currentTempUnit: 'C'});
+  component.setState({currentTempUnit: CELSIUS_TEMP_UNIT});
   const tempUnit = component.find('TempUnit');
   const unitToggle = tempUnit.prop('unitToggle');
   expect(unitToggle).not.toBeUndefined();
   unitToggle();
-  expect(component.find('TempUnit').prop('unit')).toEqual('F');
+  expect(component.find('TempUnit').prop('unit')).toEqual(FAHRENHEIT_TEMP_UNIT);
   unitToggle();
-  expect(component.find('TempUnit').prop('unit')).toEqual('C');
+  expect(component.find('TempUnit').prop('unit')).toEqual(CELSIUS_TEMP_UNIT);
 });
 
 it('should render the error element if the response is falsey', (done) => {
@@ -131,4 +132,11 @@ it('should render the error element if the response is falsey', (done) => {
     expect(error.text()).toEqual(EXPECTED_STATUS);
     done();
   });
+});
+
+it('should render Celsius temperature if the temp unit is C', () => {
+  const component = shallow(<Temp unit={CELSIUS_TEMP_UNIT} tempCelsius={EXPECTED_CELSIUS}/>);
+  const temperature = component.find('p');
+  expect(temperature.exists()).toEqual(true);
+  expect(temperature.text()).toEqual(`${EXPECTED_CELSIUS}°`); 
 });
