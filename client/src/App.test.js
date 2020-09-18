@@ -201,3 +201,11 @@ it('should render the atmosphere img if the type is an atmosphere and an alt of 
   expect(image.prop('src')).toContain('atmosphere');
   expect(image.prop('alt')).toEqual(validAtmosphereType);
 });
+
+it('should render a p tag with text of the type if type is assigned', () => {
+  const type = 'Clear';
+  const component = shallow(<WeatherDescription type={type}/>);
+  const description = component.find('p');
+  expect(description.exists()).toEqual(true);
+  expect(description.text()).toEqual(type);
+});
