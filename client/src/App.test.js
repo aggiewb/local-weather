@@ -8,6 +8,21 @@ const EXPECTED_FAHRENHEIT = 86;
 const EXPECTED_CURRENT_TEMP_UNIT = 'C';
 const EXPECTED_TYPE = 'Haze';
 
+//recreate events listeners added to the window object to control when it gets called
+const eventListeners = {};
+window.addEventListener = (eventName, callback) => {
+  eventListeners[eventName] = callback;
+};
+
+//recreate geolocation and getCurrentPosition objects normally on the navigator object
+//but does not exist in global
+const geolocation = {};
+const getCurrentPosition = (callback) => {
+  callback({coords: {longitude: 0, latitude: 0}});
+};
+geolocation.getCurrentPosition = getCurrentPosition;
+navigator.geolocation = geolocation;
+
 //smoke test for rendering of the App
 it('renders', () => {
   mount(<App />);
@@ -44,23 +59,8 @@ it('should shallow render all child components, and initialize their props', () 
 });
 
 it('should update child component props after load', (done) => {
-  //recreate events listeners added to the window object to control when it gets called
-  const eventListeners = {};
-  window.addEventListener = (eventName, callback) => {
-    eventListeners[eventName] = callback;
-  };
-
   const component = shallow(<App />);
-
-  //recreate geolocation and getCurrentPosition objects normally on the navigator object
-  //but does not exist in global
-  const geolocation = {};
-  const getCurrentPosition = (callback) => {
-    callback({coords: {longitude: 0, latitude: 0}});
-  };
-  geolocation.getCurrentPosition = getCurrentPosition;
-  navigator.geolocation = geolocation;
-
+ 
   //recreate fetch response to control the data that is to be tested
   const json = () => {
     return new Promise((resolve) => {
@@ -110,22 +110,7 @@ it('should change temp unit from C to F and back when the unit toggle function i
 });
 
 it('should render the error element if the response is falsey', (done) => {
-  //recreate events listeners added to the window object to control when it gets called
-  const eventListeners = {};
-  window.addEventListener = (eventName, callback) => {
-    eventListeners[eventName] = callback;
-  };
-
   const component = shallow(<App />);
-
-  //recreate geolocation and getCurrentPosition objects normally on the navigator object
-  //but does not exist in global
-  const geolocation = {};
-  const getCurrentPosition = (callback) => {
-    callback({coords: {longitude: 0, latitude: 0}});
-  };
-  geolocation.getCurrentPosition = getCurrentPosition;
-  navigator.geolocation = geolocation;
 
   //recreate fetch response to control the data that is to be tested
   const EXPECTED_STATUS = 'Something went wrong!'
