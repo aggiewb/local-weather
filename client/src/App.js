@@ -110,11 +110,8 @@ export const WeatherDescription = props => {
 const Attributions = () => {
   return <aside>
     <h3>Images By</h3>
-    <h4>Matthew Petroff</h4>
-    <p>Source: <a href="https://commons.wikimedia.org/wiki/File:Weather_Icons.png" rel="noreferrer noopener" target="_blank">https://commons.wikimedia.org/wiki/File:Weather_Icons.png</a></p>
-    <p><a href="https://en.wikipedia.org/wiki/Creative_Commons" rel="noreferrer noopener" target="_blank">Creative Commons</a></p>
-    <h4>Atif Arshad</h4>
-    <p>Source: <a href="https://thenounproject.com/search/?creator=307441&q=weather&i=1346984" rel="noreferrer noopener" target="_blank">https://thenounproject.com/search/?creator=307441&q=weather&i=1346984</a></p>
+    <p>Matthew Petroff: <a href="https://commons.wikimedia.org/wiki/File:Weather_Icons.png" rel="noreferrer noopener" target="_blank">https://commons.wikimedia.org/wiki/File:Weather_Icons.png</a></p>
+    <p>Atif Arshad: <a href="https://thenounproject.com/search/?creator=307441&q=weather&i=1346984" rel="noreferrer noopener" target="_blank">https://thenounproject.com/search/?creator=307441&q=weather&i=1346984</a></p>
     <p><a href="https://en.wikipedia.org/wiki/Creative_Commons" rel="noreferrer noopener" target="_blank">Creative Commons</a></p>
   </aside>;
 }
