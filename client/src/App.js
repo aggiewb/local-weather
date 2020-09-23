@@ -35,7 +35,7 @@ export default class App extends React.Component {
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
     const latitude = coordinates.latitude;
-    fetch(`/${longitude}/${latitude}`, {
+    fetch(`https://local-weather-server.glitch.me/${longitude}/${latitude}`, {
       method: 'GET',
     })
     .then(response => {
@@ -94,11 +94,11 @@ export const WeatherDescription = props => {
   const weatherImages = {};
 
   ['Thunderstorm', 'Drizzle', 'Rain', 'Snow', 'Tornado', 'Squall', 'Dust', 'Smoke', 'Clear', 'Clouds'].forEach(type => {
-    weatherImages[type] = `../weather_icons/${type.toLowerCase()}.png`;
+    weatherImages[type] = `/local-weather/weather_icons/${type.toLowerCase()}.png`;
   });
 
   ['Mist', 'Haze', 'Fog', 'Sand', 'Ash'].forEach(type => {
-    weatherImages[type] = '../weather_icons/atmosphere.png';
+    weatherImages[type] = '/local-weather/weather_icons/atmosphere.png';
   });
   
   return <div>
