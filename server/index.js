@@ -1,7 +1,10 @@
 const express = require('express');
 const app = express();
 const fetch = require('node-fetch');
-const server = app.listen(5000, () => console.log('Express server started'));
+const server = app.listen(0);
+const cors = require('cors');
+
+app.use(cors());
 
 app.get('/:longitude/:latitude', (request, response) => {
     const longitude = parseFloat(request.params.longitude);
