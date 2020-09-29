@@ -35,7 +35,7 @@ export default class App extends React.Component {
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
     const latitude = coordinates.latitude;
-    fetch(`https://local-weather-server.glitch.me/${longitude}/${latitude}`, {
+    fetch(`https://www.aggiewb.com/local-weather-server/${longitude}/${latitude}`, {
       method: 'GET',
     })
     .then(response => {
