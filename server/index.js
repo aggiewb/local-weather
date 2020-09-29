@@ -6,7 +6,7 @@ const cors = require('cors');
 
 app.use(cors());
 
-app.get('/:longitude/:latitude', (request, response) => {
+app.get('/local-weather-server/:longitude/:latitude', (request, response) => {
     const longitude = parseFloat(request.params.longitude);
     const latitude = parseFloat(request.params.latitude);
     fetch(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
