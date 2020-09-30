@@ -35,7 +35,7 @@ export default class App extends React.Component {
     const coordinates = position.coords;
     const longitude = coordinates.longitude;
     const latitude = coordinates.latitude;
-    fetch(`/${longitude}/${latitude}`, {
+    fetch(`https://www.aggiewb.com/local-weather-server/${longitude}/${latitude}`, {
       method: 'GET',
     })
     .then(response => {
@@ -94,11 +94,11 @@ export const WeatherDescription = props => {
   const weatherImages = {};
 
   ['Thunderstorm', 'Drizzle', 'Rain', 'Snow', 'Tornado', 'Squall', 'Dust', 'Smoke', 'Clear', 'Clouds'].forEach(type => {
-    weatherImages[type] = `../weather_icons/${type.toLowerCase()}.png`;
+    weatherImages[type] = `/local-weather/weather_icons/${type.toLowerCase()}.png`;
   });
 
   ['Mist', 'Haze', 'Fog', 'Sand', 'Ash'].forEach(type => {
-    weatherImages[type] = '../weather_icons/atmosphere.png';
+    weatherImages[type] = '/local-weather/weather_icons/atmosphere.png';
   });
   
   return <div>
@@ -110,14 +110,14 @@ export const WeatherDescription = props => {
 const Attributions = () => {
   return <aside>
     <h3>Images By</h3>
-    <p>Matthew Petroff: <a href="https://commons.wikimedia.org/wiki/File:Weather_Icons.png" rel="noreferrer noopener" target="_blank">https://commons.wikimedia.org/wiki/File:Weather_Icons.png</a></p>
-    <p>Atif Arshad: <a href="https://thenounproject.com/search/?creator=307441&q=weather&i=1346984" rel="noreferrer noopener" target="_blank">https://thenounproject.com/search/?creator=307441&q=weather&i=1346984</a></p>
-    <p><a href="https://en.wikipedia.org/wiki/Creative_Commons" rel="noreferrer noopener" target="_blank">Creative Commons</a></p>
+    <p><a href="https://commons.wikimedia.org/wiki/File:Weather_Icons.png" rel="noreferrer noopener" target="_blank">Matthew Petroff</a></p>
+    <p><a href="https://thenounproject.com/search/?creator=307441&q=weather&i=1346984" rel="noreferrer noopener" target="_blank">Atif Arshad</a></p>
+    <p>License: <a href="https://en.wikipedia.org/wiki/Creative_Commons" rel="noreferrer noopener" target="_blank">Creative Commons</a></p>
   </aside>;
 }
 
 const Footer = () => {
   return <footer>
-    <a href="https://www.aggiewheelerbateman.com" rel="noreferrer noopener" target="_blank">Aggie Wheeler Bateman</a> &copy; {new Date().getFullYear()}
+    <a href="https://www.aggiewb.com" rel="noreferrer noopener" target="_blank">Aggie Wheeler Bateman</a> &copy; {new Date().getFullYear()}
   </footer>;
 }

@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
 const fetch = require('node-fetch');
-const server = app.listen(5000, () => console.log('Express server started'));
+const server = app.listen(0);
+const cors = require('cors');
 
-app.get('/:longitude/:latitude', (request, response) => {
+app.use(cors());
+
+app.get('/local-weather-server/:longitude/:latitude', (request, response) => {
     const longitude = parseFloat(request.params.longitude);
     const latitude = parseFloat(request.params.latitude);
     fetch(`https://fcc-weather-api.glitch.me/api/current?lat=${latitude}&lon=${longitude}`)
